@@ -229,10 +229,9 @@ final class PhutilOAuth1Future extends FutureProxy {
       $consumer_secret = $this->consumerSecret->openEnvelope();
     }
 
-    $key = urlencode($consumer_secret).'&';
-    if ($this->tokenSecret !== null) {
-      $key .= urlencode($this->tokenSecret);
-    }
+    $consumer_secret = coalesce($consumer_secret, '');
+    $token_secret = coalesce($this->tokenSecret, '');
+    $key = urlencode($consumer_secret).'&'.urlencode($token_secret);
 
     switch ($this->signatureMethod) {
       case 'HMAC-SHA1':

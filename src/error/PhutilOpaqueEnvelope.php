@@ -60,13 +60,14 @@ final class PhutilOpaqueEnvelope extends Phobject {
    */
   private function mask($string, $noise) {
     $result = '';
-    if (phutil_nonempty_string($string)) {
-      for ($ii = 0; $ii < strlen($string); $ii++) {
-        $s = $string[$ii];
-        $n = $noise[$ii % strlen($noise)];
+    if ($string === null) {
+      return $result;
+    }
+    for ($ii = 0; $ii < strlen($string); $ii++) {
+      $s = $string[$ii];
+      $n = $noise[$ii % strlen($noise)];
 
         $result .= chr(ord($s) ^ ord($n));
-      }
     }
     return $result;
   }
